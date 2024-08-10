@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 import ResetClient from "@/app/(auth)/reset/ResetClient";
 
 const Reset = () => {
-    return (
-        <ResetClient />
-    );
+  return <ResetClient />;
 };
 
 export default Reset;

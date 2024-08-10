@@ -4,8 +4,8 @@ import Product from "@/components/product/product";
 export default function Home() {
   return (
     <>
-        <Slider />
-        <Product />
+      <Slider />
+      <Product />
     </>
   );
 }

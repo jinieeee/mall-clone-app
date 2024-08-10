@@ -1,4 +1,4 @@
-import {Inter} from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/components/toastProvider/ToastProvider";
 import Footer from "@/layouts/footer/Footer";
@@ -16,12 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Providers>
-        <Header />
-        <ToastProvider />
-        {children}
-        <Footer />
-      </Providers>
+        <Providers>
+          <Header />
+          <ToastProvider />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

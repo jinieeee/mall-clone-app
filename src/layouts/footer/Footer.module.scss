@@ -4,7 +4,6 @@
   .customerGuide {
     background: var(--light-gray);
 
-
     .customerGuideList {
       display: flex;
       flex-flow: row nowrap;
@@ -44,7 +43,6 @@
     flex-flow: row nowrap;
     justify-content: space-between;
 
-
     .coupangInformationList {
       list-style: none;
       padding-left: 0;
@@ -58,7 +56,6 @@
     }
 
     .customerCenter {
-
       .customerCenterList {
         display: flex;
         flex-flow: row nowrap;

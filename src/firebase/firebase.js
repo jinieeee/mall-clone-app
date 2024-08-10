@@ -7,12 +7,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyChKW3oew9JesVaOP3eYaI6n7zQSJxodts",
-    authDomain: "mall-clone-app-81f60.firebaseapp.com",
-    projectId: "mall-clone-app-81f60",
-    storageBucket: "mall-clone-app-81f60.appspot.com",
-    messagingSenderId: "642648737347",
-    appId: "1:642648737347:web:23cec842c668d38bbe36f6"
+  apiKey: "AIzaSyChKW3oew9JesVaOP3eYaI6n7zQSJxodts",
+  authDomain: "mall-clone-app-81f60.firebaseapp.com",
+  projectId: "mall-clone-app-81f60",
+  storageBucket: "mall-clone-app-81f60.appspot.com",
+  messagingSenderId: "642648737347",
+  appId: "1:642648737347:web:23cec842c668d38bbe36f6",
 };
 
 // Initialize Firebase

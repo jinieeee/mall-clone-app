@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
 import LoginClient from "./LoginClient";
 
 const Login = () => {
-
-    return (
-        <LoginClient />
-    );
+  return <LoginClient />;
 };
 
 export default Login;

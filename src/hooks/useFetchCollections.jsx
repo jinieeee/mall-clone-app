@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const useFetchCollections = () => {
-    return (
-        <div>
-            UseFetchCollections
-        </div>
-    );
+  return <div>UseFetchCollections</div>;
 };
 
 export default useFetchCollections;
