@@ -16,12 +16,12 @@ const useFetchCollections = (collectionName) => {
       const q = query(docRef, orderBy("createdAt", "desc"));
 
       onSnapshot(q, (snapshot) => {
-        const alLData = snapshot.docs.map((doc) => ({
+        const allData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        setData(alLData);
+        setData(allData);
         setIsLoading(false);
       });
     } catch (error) {
