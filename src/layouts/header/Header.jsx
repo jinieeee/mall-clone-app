@@ -4,14 +4,17 @@ import React, {useEffect, useState} from 'react';
 import styles from './Header.module.scss';
 import Link from "next/link";
 import {auth} from "@/firebase/firebase";
-import {signOut, onAuthStateChanged} from "firebase/auth";
+import {onAuthStateChanged, signOut} from "firebase/auth";
 import {toast} from "react-toastify";
 import {usePathname, useRouter} from "next/navigation";
 import InnerHeader from "@/layouts/innerHeader/InnerHeader";
+import {useDispatch} from "react-redux";
+import {REMOVE_ACTIVE_USER, SET_ACTIVE_USER} from "@/redux/slice/authSlice";
 
 const Header = () => {
     const pathname = usePathname();
     const router = useRouter();
+    const dispatch = useDispatch();
     const [displayName, setDisplayName] = useState('');
 
     useEffect(() => {
@@ -25,13 +28,19 @@ const Header = () => {
                     setDisplayName(user.displayName);
                 }
 
-                // todo save user info to redux store
+                //  save user info to redux store
+                dispatch(SET_ACTIVE_USER({
+                    email: user.email,
+                    username: user.displayName ?? displayName,
+                    userID: user.uid
+                }))
             } else {
                 setDisplayName('');
-                // todo remove user info from redux store
+                // remove user info from redux store
+                dispatch(REMOVE_ACTIVE_USER());
             }
         })
-    }, []);
+    }, [dispatch, displayName]);
 
     const logoutUser = (e) => {
         e.preventDefault();

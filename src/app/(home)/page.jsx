@@ -1,7 +1,11 @@
+import Slider from "@/components/slider/Slider";
+import Product from "@/components/product/product";
+
 export default function Home() {
   return (
-    <main>
-      Home
-    </main>
+    <>
+        <Slider />
+        <Product />
+    </>
   );
 }
