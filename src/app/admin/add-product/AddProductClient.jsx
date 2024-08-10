@@ -6,6 +6,10 @@ import {useRouter} from "next/navigation";
 import Loader from "@/components/loader/Loader";
 import Heading from "@/components/heading/Heading";
 import Button from "@/components/button/Button";
+import {db, storage} from "@/firebase/firebase";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {addDoc, collection, Timestamp} from "firebase/firestore";
+import {toast} from "react-toastify";
 
 const categories = [
     { id: 1, name: 'Laptop' },
@@ -44,11 +48,55 @@ const AddProductClient = () => {
     }
 
     const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
+        uploadTask.on('state_changed',
+(snapshot) => {
+            const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+            setUploadProgress(progress);
+            },
+        (error) => {
+            toast.error(error.message);
+            },
+            () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                setProduct({...product, imageUrl: downloadURL});
+                toast.success('이미지 업로드 성공');
+            })
+            }
+        )
     }
 
     const addProduct = (e) => {
         e.preventDefault();
+
+        setIsLoading(true);
+
+        try {
+            addDoc(collection(db, "products"), {
+                name: product.name,
+                imageUrl: product.imageUrl,
+                price: Number(product.price),
+                category: product.category,
+                brand: product.brand,
+                desc: product.desc,
+                createdAt: Timestamp.now().toDate()
+            })
+
+            setIsLoading(false);
+            setUploadProgress(0);
+            setProduct({...initialState});
+
+            toast.success('상품 등록 성공');
+            router.push('/admin/all-products');
+        } catch (error) {
+            setIsLoading(false);
+            toast.error(error.message);
+        }
     }
 
     return (
@@ -72,7 +120,7 @@ const AddProductClient = () => {
                             uploadProgress > 0 &&
                             <div className={styles.progress}>
                                 <div
-                                    className={styles.progress-bar}
+                                    className={styles["progress-bar"]}
                                     style={{width: `${uploadProgress}%`}}
                                 >
                                     {uploadProgress < 100
