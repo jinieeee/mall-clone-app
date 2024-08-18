@@ -3,12 +3,8 @@
 import React, { useEffect } from "react";
 import styles from "./Product.module.scss";
 import useFetchCollections from "@/hooks/useFetchCollections";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  GET_PRICE_RANGE,
-  selectProducts,
-  STORE_PRODUCTS,
-} from "@/redux/slice/productSlice";
+import { useDispatch } from "react-redux";
+import { GET_PRICE_RANGE, STORE_PRODUCTS } from "@/redux/slice/productSlice";
 import Loader from "@/components/loader/Loader";
 import ProductList from "@/components/product/productList/ProductList";
 import ProductFilter from "@/components/product/productFilter/ProductFilter";
@@ -21,24 +17,16 @@ const Product = () => {
   useEffect(() => {
     dispatch(
       STORE_PRODUCTS({
-        products: data.map((item) => ({
-          ...item,
-          createdAt: item.createdAt.toString(),
-        })),
+        products: data,
       }),
     );
 
     dispatch(
       GET_PRICE_RANGE({
-        products: data.map((item) => ({
-          ...item,
-          createdAt: item.createdAt.toString(),
-        })),
+        products: data,
       }),
     );
   });
-
-  const products = useSelector(selectProducts);
 
   return (
     <section className={styles.product}>

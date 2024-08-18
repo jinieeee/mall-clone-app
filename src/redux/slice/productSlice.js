@@ -15,7 +15,7 @@ const productSlice = createSlice({
     },
 
     GET_PRICE_RANGE(state, action) {
-      const products = action.payload.products;
+      const { products } = action.payload;
       const array = [];
       products.map((product) => {
         const price = product.price;
@@ -33,8 +33,8 @@ const productSlice = createSlice({
 
 export const { STORE_PRODUCTS, GET_PRICE_RANGE } = productSlice.actions;
 
-export const selectProducts = (state) => state.products;
-export const selectMinPrice = (state) => state.minPrice;
-export const selectMaxPrice = (state) => state.maxPrice;
+export const selectProducts = (state) => state.product.products;
+export const selectMinPrice = (state) => state.product.minPrice;
+export const selectMaxPrice = (state) => state.product.maxPrice;
 
 export default productSlice.reducer;

@@ -10,37 +10,76 @@ const filterSlice = createSlice({
   reducers: {
     FILTER_BY_CATEGORY: (state, action) => {
       const { products, category } = action.payload;
-      let tempProduct = [];
+      let tempProducts;
       if (category === "All") {
-        tempProduct = products;
+        tempProducts = products;
       } else {
-        tempProduct = products.filter(
+        tempProducts = products.filter(
           (product) => product.category === category,
         );
       }
-      state.filteredProducts = tempProduct;
+      state.filteredProducts = tempProducts;
     },
     FILTER_BY_BRAND: (state, action) => {
       const { products, brand } = action.payload;
-      let tempProduct = [];
+      let tempProducts;
       if (brand === "All") {
-        tempProduct = products;
+        tempProducts = products;
       } else {
-        tempProduct = products.filter((product) => product.brand === brand);
+        tempProducts = products.filter((product) => product.brand === brand);
       }
-      state.filteredProducts = tempProduct;
+      state.filteredProducts = tempProducts;
     },
     FILTER_BY_PRICE: (state, action) => {
       const { products, price } = action.payload;
-      let tempProduct = [];
-      tempProduct = products.filter((product) => product.price <= price);
-      state.filteredProducts = tempProduct;
+      state.filteredProducts = products.filter(
+        (product) => product.price <= price,
+      );
+    },
+    FILTER_BY: (state, action) => {
+      const { products, price, brand, category } = action.payload;
+      let tempProducts = products;
+
+      if (category !== "All") {
+        tempProducts = products.filter(
+          (product) => product.category === category,
+        );
+      }
+
+      if (brand !== "All") {
+        tempProducts = tempProducts.filter(
+          (product) => product.brand === brand,
+        );
+      }
+
+      tempProducts = tempProducts.filter((product) => product.price <= price);
+
+      state.filteredProducts = tempProducts;
+    },
+    SORT_PRODUCTS: (state, action) => {
+      const { products, sort } = action.payload;
+      let tempProducts = products;
+
+      if (sort === "lowest-price") {
+        tempProducts = products.slice().sort((a, b) => a.price - b.price);
+      }
+
+      if (sort === "highest-price") {
+        tempProducts = products.slice().sort((a, b) => b.price - a.price);
+      }
+
+      state.filteredProducts = tempProducts;
     },
   },
 });
 
-export const { FILTER_BY_CATEGORY, FILTER_BY_BRAND, FILTER_BY_PRICE } =
-  filterSlice.actions;
+export const {
+  FILTER_BY_CATEGORY,
+  FILTER_BY_BRAND,
+  FILTER_BY_PRICE,
+  FILTER_BY,
+  SORT_PRODUCTS,
+} = filterSlice.actions;
 
 export const selectFilteredProducts = (state) => state.filter.filteredProducts;
 
