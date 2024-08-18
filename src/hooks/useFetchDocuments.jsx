@@ -1,7 +1,33 @@
-import React from "react";
+"use client";
 
-const useFetchDocuments = () => {
-  return <div>UseFetchDocuments</div>;
+import { useCallback, useEffect, useState } from "react";
+import { db } from "@/firebase/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+
+const useFetchDocuments = (collectionName, arg) => {
+  const [documents, setDocuments] = useState([]);
+
+  const getDocuments = useCallback(async () => {
+    const q = query(
+      collection(db, collectionName),
+      where(arg[0], arg[1], arg[2]),
+    );
+    const querySnapshot = await getDocs(q);
+    let documentsArray = [];
+    querySnapshot.forEach((doc) => {
+      documentsArray.push(doc.data());
+    });
+
+    setDocuments(documentsArray);
+  }, [arg[0], arg[1], arg[2], collectionName]);
+
+  useEffect(() => {
+    getDocuments();
+  }, [getDocuments]);
+
+  return {
+    documents,
+  };
 };
 
 export default useFetchDocuments;
